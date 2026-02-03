@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   Tabs,
   TabsList,
@@ -7,9 +8,19 @@ import {
   TabsContent,
 } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "./Skeleton";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { t } from "@/lib/i18n";
+import {
+  Copy,
+  Check,
+  Sparkles,
+  Type,
+  AlignLeft,
+  MousePointer2,
+  Bot
+} from "lucide-react";
 
 const LANGS: any = {
   en: "English",
@@ -19,80 +30,181 @@ const LANGS: any = {
 };
 
 export default function PreviewPanel({ data, loading, locale }: any) {
-  if (!data) {
+  const [copied, setCopied] = useState(false);
+  const [activeTab, setActiveTab] = useState("en");
+  const [loadingStep, setLoadingStep] = useState(0);
+
+  const LOADING_STEPS = [
+    "Analyzing product context...",
+    "Identifying cultural nuances...",
+    "Translating to target languages...",
+    "Optimizing keywords for SEO...",
+    "Finalizing your listing..."
+  ];
+
+  useEffect(() => {
+    if (loading) {
+      setLoadingStep(0);
+      const interval = setInterval(() => {
+        setLoadingStep((prev) => (prev + 1) % LOADING_STEPS.length);
+      }, 2000);
+      return () => clearInterval(interval);
+    }
+  }, [loading]);
+
+  const handleCopy = (text: string) => {
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      toast.success(t("preview.copySuccess", locale) || "Copied to clipboard", {
+        description: t("preview.copyDescription", locale) || "Content is ready to paste.",
+      });
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
+  // 1. Empty State
+  if (!data && !loading) {
     return (
-      <div className="relative bg-white p-8 rounded-2xl shadow-sm space-y-4">
-        <Skeleton className="h-6 w-1/3" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-5/6" />
-        <Skeleton className="h-10 w-32 mt-4" />
-        {loading ? (
-          <div className="pointer-events-none absolute inset-0 rounded-2xl bg-white/60 backdrop-blur-[2px]">
-            <div className="absolute inset-x-6 top-6 h-10 animate-pulse rounded-lg bg-slate-200/80" />
+      <div className="h-full min-h-[500px] flex flex-col items-center justify-center text-center p-8 border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50/50">
+        <div className="relative mb-6">
+          <div className="absolute inset-0 bg-violet-200 rounded-full blur-xl opacity-20 animate-pulse" />
+          <div className="relative h-20 w-20 bg-white rounded-2xl border border-slate-100 shadow-sm flex items-center justify-center">
+            <Bot className="h-10 w-10 text-slate-300" />
           </div>
-        ) : null}
+        </div>
+        <h3 className="text-xl font-bold text-slate-900 mb-2">
+          {t("preview.empty.title", locale) || "Ready to Create"}
+        </h3>
+        <p className="text-slate-500 max-w-xs mx-auto leading-relaxed">
+          {t("preview.empty.body", locale) || "Fill in the product details on the left and watch the AI magic happen here."}
+        </p>
       </div>
     );
   }
 
+  // 2. Main Content
   return (
-    <div className="relative bg-white p-8 rounded-2xl shadow-sm">
-      {loading ? (
-        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-white/60 backdrop-blur-[2px]">
-          <div className="absolute inset-x-6 top-6 h-10 animate-pulse rounded-lg bg-slate-200/80" />
-        </div>
-      ) : null}
-      <h2 className="text-xl font-semibold mb-4">
-        {t("preview.title", locale)}
-      </h2>
+    <div className="h-full flex flex-col bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden relative">
 
-      <Tabs defaultValue="en">
-        <TabsList className="mb-4">
-          {Object.keys(LANGS).map((lang) => (
-            <TabsTrigger key={lang} value={lang}>
-              {LANGS[lang]}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-
-        {Object.keys(LANGS).map((lang) => (
-          <TabsContent key={lang} value={lang}>
-            <div className="space-y-3 transition-all duration-200">
-              {!data[lang] ? (
-                <div className="space-y-3">
-                  <Skeleton className="h-5 w-1/2" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-5/6" />
-                </div>
-              ) : (
-                <>
-                  <h3 className="text-lg font-bold">{data[lang].title}</h3>
-
-                  <p className="text-gray-600">{data[lang].description}</p>
-
-                  <Button
-                    variant="secondary"
-                    className="cursor-pointer"
-                    onClick={() =>
-                      navigator.clipboard
-                        .writeText(
-                          `${data[lang]?.title}\n${data[lang]?.description}\n${data[lang]?.cta}`
-                        )
-                        .then(() =>
-                          toast.success(t("preview.copySuccess", locale), {
-                            description: t("preview.copyDescription", locale),
-                          })
-                        )
-                    }
-                  >
-                    {data[lang].cta}
-                  </Button>
-                </>
-              )}
+      {/* Loading Overlay */}
+      {loading && (
+        <div className="absolute inset-0 z-50 bg-white/60 backdrop-blur-sm flex items-center justify-center p-8">
+          <div className="w-full max-w-md space-y-6">
+            <div className="space-y-3 text-center mb-8">
+              <div className="relative mx-auto h-12 w-12 flex items-center justify-center">
+                <div className="absolute inset-0 rounded-full border-4 border-violet-100"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-violet-600 border-t-transparent animate-spin"></div>
+                <Sparkles className="h-5 w-5 text-violet-600 animate-pulse" />
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm font-bold text-slate-800 animate-in fade-in slide-in-from-bottom-2">
+                  {LOADING_STEPS[loadingStep]}
+                </p>
+                <p className="text-xs text-slate-400">This usually takes about 10-15 seconds</p>
+              </div>
             </div>
-          </TabsContent>
-        ))}
-      </Tabs>
+            <div className="space-y-4">
+              <Skeleton className="h-8 w-3/4 mx-auto rounded-lg" />
+              <Skeleton className="h-32 w-full rounded-xl" />
+              <Skeleton className="h-12 w-1/3 mx-auto rounded-lg" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Header & Tabs */}
+      <div className="border-b border-slate-100 bg-slate-50/50 p-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="w-full h-12 bg-slate-200/50 p-1 rounded-xl">
+            {Object.keys(LANGS).map((lang) => (
+              <TabsTrigger
+                key={lang}
+                value={lang}
+                disabled={!data && !loading}
+                className="flex-1 rounded-lg text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-violet-700 data-[state=active]:shadow-sm transition-all"
+              >
+                {LANGS[lang]}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+      </div>
+
+      {/* Content Area */}
+      <ScrollArea className="flex-1 p-6">
+        {data && data[activeTab] ? (
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+
+            {/* Title Section */}
+            <div className="group space-y-2">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                <Type className="h-3.5 w-3.5" />
+                Product Title
+              </div>
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 group-hover:border-violet-200 group-hover:shadow-sm transition-all duration-300">
+                <h3 className="text-lg md:text-xl font-bold text-slate-900 leading-snug">
+                  {data[activeTab].title}
+                </h3>
+              </div>
+            </div>
+
+            {/* Description Section */}
+            <div className="group space-y-2">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                <AlignLeft className="h-3.5 w-3.5" />
+                Localized Description
+              </div>
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 group-hover:border-violet-200 group-hover:shadow-sm transition-all duration-300">
+                <p className="text-slate-600 leading-relaxed whitespace-pre-line">
+                  {data[activeTab].description}
+                </p>
+              </div>
+            </div>
+
+            {/* CTA Section */}
+            <div className="group space-y-2">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                <MousePointer2 className="h-3.5 w-3.5" />
+                Call to Action
+              </div>
+              <div className="p-1">
+                <Button className="w-full h-12 rounded-xl bg-violet-600 hover:bg-violet-700 text-white shadow-lg shadow-violet-200 font-semibold text-lg transition-all active:scale-[0.98]">
+                  {data[activeTab].cta}
+                </Button>
+              </div>
+            </div>
+
+          </div>
+        ) : (
+          !loading && <div className="h-full" />
+        )}
+      </ScrollArea>
+
+      {/* Footer Actions */}
+      {data && (
+        <div className="p-4 border-t border-slate-100 bg-white flex justify-between items-center gap-4">
+          <div className="text-xs text-slate-400 font-medium">
+            AI-generated content may require review.
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handleCopy(`${data[activeTab]?.title}\n\n${data[activeTab]?.description}\n\n${data[activeTab]?.cta}`)}
+            className="rounded-lg border-slate-200 text-slate-600 hover:text-violet-600 hover:border-violet-200 hover:bg-violet-50 transition-colors gap-2"
+          >
+            {copied ? (
+              <>
+                <Check className="h-4 w-4" /> Copied
+              </>
+            ) : (
+              <>
+                <Copy className="h-4 w-4" /> Copy All
+              </>
+            )}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
