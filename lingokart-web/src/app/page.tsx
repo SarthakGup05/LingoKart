@@ -2,25 +2,43 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { t } from "@/lib/i18n";
+import { Header } from "@/components/Header";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import ProductForm from "@/components/ProductForm";
 import PreviewPanel from "@/components/PreviewPanel";
 
 export default function Home() {
   const [preview, setPreview] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [locale, setLocale] = useState("en");
 
-  const handleGenerate = async ({ product, tone }: any) => {
+  const handleGenerate = async ({ product, tone, mode }: any) => {
     void tone;
-    const res = await fetch("/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        product,
-        languages: ["en", "hi", "ta", "bn"],
-      }),
-    });
+    setLoading(true);
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          product,
+          mode,
+          languages: ["en", "hi", "ta", "bn"],
+        }),
+      });
 
-    const data = await res.json();
-    setPreview(data);
+      if (!res.ok) {
+        throw new Error("Failed");
+      }
+
+      const data = await res.json();
+      setPreview(data);
+    } catch {
+      toast.error(t("error.generic", locale));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -33,65 +51,80 @@ export default function Home() {
             </span>
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">
-                LingoKart
+                {t("app.title", locale)}
               </p>
               <p className="text-sm font-semibold text-slate-900">
-                Product Studio
+                {t("nav.productStudio", locale)}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-            <span className="rounded-full border border-slate-200/80 bg-white px-4 py-2">
-              Localized copy
-            </span>
-            <span className="rounded-full border border-slate-200/80 bg-white px-4 py-2">
-              AI ready
-            </span>
-          </div>
+            <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+              <span className="rounded-full border border-slate-200/80 bg-white px-4 py-2">
+                {t("hero.badge.localized", locale)}
+              </span>
+              <span className="rounded-full border border-slate-200/80 bg-white px-4 py-2">
+                {t("hero.badge.aiReady", locale)}
+              </span>
+            </div>
           <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+                {t("nav.locale", locale)}
+              </span>
+              <LanguageSwitcher />
+            </div>
             <Button
               variant="outline"
-              className="h-10 rounded-full border-slate-200 bg-white"
+              className="h-10 rounded-full border-slate-200 bg-white cursor-pointer"
             >
-              View pricing
+              {t("nav.viewPricing", locale)}
             </Button>
-            <Button className="h-10 rounded-full bg-slate-900 text-white hover:bg-slate-800">
-              Book demo
+            <Button className="h-10 rounded-full bg-slate-900 text-white hover:bg-slate-800 cursor-pointer">
+              {t("nav.bookDemo", locale)}
             </Button>
           </div>
         </nav>
 
-        <header className="fade-up-delayed rounded-3xl border border-slate-200/70 bg-white/80 p-8 shadow-[0_30px_70px_-45px_rgba(15,23,42,0.6)] backdrop-blur">
+        <div className="fade-up-delayed grid gap-6">
+          <Header />
+          <header className="rounded-3xl border border-slate-200/70 bg-white/80 p-8 shadow-[0_30px_70px_-45px_rgba(15,23,42,0.6)] backdrop-blur">
           <div className="flex flex-wrap items-center justify-between gap-6">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">
-                LingoKart Studio
+                {t("hero.label", locale)}
               </p>
               <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-900">
-                Craft premium localized listings with confidence.
+                {t("hero.headline", locale)}
               </h1>
               <p className="mt-3 max-w-xl text-sm text-slate-600">
-                Create market-ready product copy that sounds native, polished,
-                and compelling. Perfect for marketplaces, catalogs, and social
-                commerce.
+                {t("hero.description", locale)}
               </p>
             </div>
             <div className="grid gap-3 text-xs text-slate-500">
               <div className="rounded-2xl border border-slate-200/80 bg-white px-4 py-3">
-                <p className="font-semibold text-slate-700">Focus</p>
-                <p>Localized product storytelling</p>
+                <p className="font-semibold text-slate-700">
+                  {t("hero.card.focus.title", locale)}
+                </p>
+                <p>{t("hero.card.focus.body", locale)}</p>
               </div>
               <div className="rounded-2xl border border-slate-200/80 bg-white px-4 py-3">
-                <p className="font-semibold text-slate-700">Output</p>
-                <p>Headlines, descriptions, CTA</p>
+                <p className="font-semibold text-slate-700">
+                  {t("hero.card.output.title", locale)}
+                </p>
+                <p>{t("hero.card.output.body", locale)}</p>
               </div>
             </div>
           </div>
         </header>
+        </div>
 
         <div className="fade-up-delayed grid grid-cols-2 gap-8">
-          <ProductForm onGenerate={handleGenerate} />
-          <PreviewPanel data={preview} />
+          <ProductForm
+            onGenerate={handleGenerate}
+            loading={loading}
+            locale={locale}
+          />
+          <PreviewPanel data={preview} loading={loading} locale={locale} />
         </div>
       </div>
     </main>

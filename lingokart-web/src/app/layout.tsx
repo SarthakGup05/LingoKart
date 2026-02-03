@@ -1,4 +1,6 @@
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
+import { LingoProvider } from "@lingo.dev/compiler/react";
 
 export const metadata = {
   title: "LingoKart",
@@ -11,8 +13,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-gray-50 text-gray-900">{children}</body>
-    </html>
+    <LingoProvider>
+      <html lang="en">
+        <body className="bg-gray-50 text-gray-900">
+          {children}
+          <Toaster richColors closeButton />
+        </body>
+      </html>
+    </LingoProvider>
   );
 }
