@@ -1,4 +1,5 @@
-# 🛍️ LingoKart  
+# 🛍️ LingoKart
+
 ### AI-Enhanced, Multilingual Product Listings for Local Sellers
 
 LingoKart is an **AI-ready MVP** that helps sellers create **SEO-optimized, multilingual product listings** from a single input.
@@ -10,6 +11,7 @@ Instead of only translating text, LingoKart first **enhances product content usi
 ## 🚀 Problem
 
 Small and local sellers often struggle with:
+
 - Writing compelling product descriptions
 - Optimizing listings for search engines
 - Reaching non-English-speaking customers
@@ -38,7 +40,6 @@ They **don’t improve discoverability or conversion**.
 
 ## 🧠 How It Works
 
-
 This pipeline ensures sellers get **both discoverability and reach**.
 
 ---
@@ -60,10 +61,10 @@ LingoKart uses **runtime localization** for dynamic content.
 
 - **Tool:** Lingo.dev JavaScript SDK
 - **Scope:** Seller-generated, AI-enhanced product listings
-- **Why:**  
-  - Content changes per user  
-  - Needs on-demand translation  
-  - Preserves structured objects  
+- **Why:**
+  - Content changes per user
+  - Needs on-demand translation
+  - Preserves structured objects
 
 Static UI text remains simple and language-agnostic in this MVP.
 
@@ -74,12 +75,15 @@ Static UI text remains simple and language-agnostic in this MVP.
 AI is used **before localization**, not instead of it.
 
 ### What AI does:
+
 - Improves product descriptions for SEO
 - Adds buyer-intent keywords
 - Enhances clarity and structure
 
 ### Reliability First
+
 Because free-tier AI APIs can be rate-limited:
+
 - AI enhancement is attempted first
 - If unavailable, a deterministic SEO fallback is used
 - Localization always succeeds
@@ -91,18 +95,22 @@ This ensures **no broken demos** and **production-safe behavior**.
 ## 🛠️ Tech Stack
 
 **Frontend**
+
 - Next.js 16 (App Router)
 - React
 - Tailwind CSS
 - shadcn/ui
 
 **Backend**
+
 - Next.js API Routes
 
 **AI**
+
 - Google Gemini API (SEO enhancement)
 
 **Localization**
+
 - Lingo.dev JavaScript SDK (runtime)
 
 ---
@@ -131,4 +139,13 @@ This ensures **no broken demos** and **production-safe behavior**.
 
 ```env
 LINGODOTDEV_API_KEY=your_lingo_key
-GEMINI_API_KEY=your_gemini_key
+
+---
+
+## 📱 PWA Support
+
+LingoKart is fully optimized as a Progressive Web App (PWA).
+- **Offline Capable:** Works even with spotty internet.
+- **Installable:** Add to your home screen for a native app experience.
+- **Auto-Updates:** Always runs the latest version.
+```
