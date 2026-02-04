@@ -30,7 +30,9 @@ const LANGS: any = {
 };
 
 export default function PreviewPanel({ data, loading, locale }: any) {
-  const [copied, setCopied] = useState(false);
+  // CHANGED: track which section is copied (null = none, string = section id)
+  const [copyState, setCopyState] = useState<string | null>(null);
+
   const [activeTab, setActiveTab] = useState("en");
   const [loadingStep, setLoadingStep] = useState(0);
 
@@ -52,16 +54,36 @@ export default function PreviewPanel({ data, loading, locale }: any) {
     }
   }, [loading]);
 
-  const handleCopy = (text: string) => {
+  // CHANGED: Added sectionId parameter to identify which button was clicked
+  const handleCopy = (text: string, sectionId: string) => {
     if (!text) return;
     navigator.clipboard.writeText(text).then(() => {
-      setCopied(true);
+      setCopyState(sectionId); // Set the specific section as copied
+
       toast.success(t("preview.copySuccess", locale) || "Copied to clipboard", {
         description: t("preview.copyDescription", locale) || "Content is ready to paste.",
       });
-      setTimeout(() => setCopied(false), 2000);
+
+      setTimeout(() => setCopyState(null), 2000);
     });
   };
+
+  // HELPER: Renders the small copy button for sections
+  const CopyButton = ({ text, id }: { text: string; id: string }) => (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={() => handleCopy(text, id)}
+      className="h-6 w-6 text-slate-400 hover:text-violet-600 hover:bg-violet-50 transition-colors"
+      title="Copy section"
+    >
+      {copyState === id ? (
+        <Check className="h-3.5 w-3.5" />
+      ) : (
+        <Copy className="h-3.5 w-3.5" />
+      )}
+    </Button>
+  );
 
   // 1. Empty State
   if (!data && !loading) {
@@ -138,9 +160,12 @@ export default function PreviewPanel({ data, loading, locale }: any) {
 
             {/* Title Section */}
             <div className="group space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
-                <Type className="h-3.5 w-3.5" />
-                Product Title
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  <Type className="h-3.5 w-3.5" />
+                  Product Title
+                </div>
+                <CopyButton text={data[activeTab].title} id="title" />
               </div>
               <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 group-hover:border-violet-200 group-hover:shadow-sm transition-all duration-300">
                 <h3 className="text-lg md:text-xl font-bold text-slate-900 leading-snug">
@@ -151,9 +176,12 @@ export default function PreviewPanel({ data, loading, locale }: any) {
 
             {/* Description Section */}
             <div className="group space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
-                <AlignLeft className="h-3.5 w-3.5" />
-                Localized Description
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  <AlignLeft className="h-3.5 w-3.5" />
+                  Localized Description
+                </div>
+                <CopyButton text={data[activeTab].description} id="desc" />
               </div>
               <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 group-hover:border-violet-200 group-hover:shadow-sm transition-all duration-300">
                 <p className="text-slate-600 leading-relaxed whitespace-pre-line">
@@ -164,9 +192,12 @@ export default function PreviewPanel({ data, loading, locale }: any) {
 
             {/* CTA Section */}
             <div className="group space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
-                <MousePointer2 className="h-3.5 w-3.5" />
-                Call to Action
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  <MousePointer2 className="h-3.5 w-3.5" />
+                  Call to Action
+                </div>
+                <CopyButton text={data[activeTab].cta} id="cta" />
               </div>
               <div className="p-1">
                 <Button className="w-full h-12 rounded-xl bg-violet-600 hover:bg-violet-700 text-white shadow-lg shadow-violet-200 font-semibold text-lg transition-all active:scale-[0.98]">
@@ -184,16 +215,30 @@ export default function PreviewPanel({ data, loading, locale }: any) {
       {/* Footer Actions */}
       {data && (
         <div className="p-4 border-t border-slate-100 bg-white flex justify-between items-center gap-4">
-          <div className="text-xs text-slate-400 font-medium">
-            AI-generated content may require review.
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-slate-400 font-medium">
+              AI-generated content may require review.
+            </span>
+            <span className="text-slate-300">•</span>
+            <a
+              href="https://lingo.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-slate-400 hover:text-violet-600 font-medium transition-colors"
+            >
+              Powered by <span className="font-bold">lingo.dev</span>
+            </a>
           </div>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => handleCopy(`${data[activeTab]?.title}\n\n${data[activeTab]?.description}\n\n${data[activeTab]?.cta}`)}
+            onClick={() => handleCopy(
+              `${data[activeTab]?.title}\n\n${data[activeTab]?.description}\n\n${data[activeTab]?.cta}`,
+              'all'
+            )}
             className="rounded-lg border-slate-200 text-slate-600 hover:text-violet-600 hover:border-violet-200 hover:bg-violet-50 transition-colors gap-2"
           >
-            {copied ? (
+            {copyState === 'all' ? (
               <>
                 <Check className="h-4 w-4" /> Copied
               </>

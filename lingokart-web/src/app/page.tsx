@@ -2,22 +2,22 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { 
-  ShoppingBag, 
-  ArrowRight, 
-  Languages, 
-  TrendingUp, 
-  Users, 
-  Play, 
-  Globe, 
-  CheckCircle2, 
-  XCircle 
+import {
+  ShoppingBag,
+  ArrowRight,
+  Languages,
+  TrendingUp,
+  Users,
+  Play,
+  Globe,
+  CheckCircle2,
+  XCircle
 } from "lucide-react";
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#030712] selection:bg-violet-500/30 selection:text-violet-200 overflow-x-hidden font-sans">
-      
+
       {/* Custom CSS for specific animations to avoid config dependencies */}
       <style jsx global>{`
         @keyframes blob {
@@ -51,9 +51,7 @@ export default function LandingPage() {
           </div>
 
           <div className="flex items-center gap-6">
-            <Link href="/login" className="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
-              Sign In
-            </Link>
+
             <Link href="/studio">
               <Button className="rounded-full bg-white text-slate-950 hover:bg-slate-200 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] cursor-pointer font-semibold transition-all hover:scale-105 active:scale-95 h-10 px-6">
                 Launch Studio
@@ -69,7 +67,7 @@ export default function LandingPage() {
           {/* Background Effects */}
           <div className="absolute inset-0 bg-[#030712] -z-30" />
           <div className="absolute inset-0 bg-grid-white [mask-image:linear-gradient(to_bottom,transparent,black,transparent)] -z-20" />
-          
+
           {/* Animated Blobs */}
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/30 rounded-full blur-[128px] -z-10 animate-blob mix-blend-screen" />
           <div className="absolute top-0 right-1/4 w-96 h-96 bg-fuchsia-500/20 rounded-full blur-[128px] -z-10 animate-blob animation-delay-2000 mix-blend-screen" />
@@ -92,7 +90,7 @@ export default function LandingPage() {
             </h1>
 
             <p className="text-lg md:text-2xl text-slate-400 max-w-3xl mx-auto leading-relaxed mb-12">
-              90% of Indian shoppers prefer content in <span className="text-violet-300 font-semibold">their native language</span>. 
+              90% of Indian shoppers prefer content in <span className="text-violet-300 font-semibold">their native language</span>.
               <br className="hidden md:block" /> If they can't read it, they won't buy it.
             </p>
 
@@ -102,20 +100,18 @@ export default function LandingPage() {
                   Fix This Now
                 </Button>
               </Link>
-              <Button variant="ghost" size="lg" className="h-16 px-8 text-lg rounded-full text-slate-400 hover:text-white hover:bg-white/5 transition-all group border border-transparent hover:border-white/10">
-                <Play className="mr-2 h-5 w-5 fill-current group-hover:text-violet-400 transition-colors" /> Watch Demo
-              </Button>
+
             </div>
 
             {/* Social Proof Strip */}
             <div className="mt-20 pt-10 border-t border-white/5 flex flex-col items-center gap-4">
               <p className="text-slate-500 text-sm uppercase tracking-widest font-semibold">Trusted by Next-Gen Brands</p>
               <div className="flex gap-8 md:gap-16 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-                 {/* Placeholders for logos - visual representation only */}
-                 <div className="h-8 w-24 bg-white/20 rounded mix-blend-overlay"></div>
-                 <div className="h-8 w-24 bg-white/20 rounded mix-blend-overlay"></div>
-                 <div className="h-8 w-24 bg-white/20 rounded mix-blend-overlay"></div>
-                 <div className="h-8 w-24 bg-white/20 rounded mix-blend-overlay hidden sm:block"></div>
+                {/* Placeholders for logos - visual representation only */}
+                <div className="h-8 w-24 bg-white/20 rounded mix-blend-overlay"></div>
+                <div className="h-8 w-24 bg-white/20 rounded mix-blend-overlay"></div>
+                <div className="h-8 w-24 bg-white/20 rounded mix-blend-overlay"></div>
+                <div className="h-8 w-24 bg-white/20 rounded mix-blend-overlay hidden sm:block"></div>
               </div>
             </div>
           </div>
@@ -125,14 +121,14 @@ export default function LandingPage() {
         <section className="py-32 bg-[#F8FAFC] relative overflow-hidden">
           {/* Decorative Pattern */}
           <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-100/50 via-transparent to-transparent" />
-          
+
           <div className="container mx-auto px-6 relative z-10">
             <div className="grid lg:grid-cols-2 gap-20 items-center">
-              
+
               {/* Text Side */}
               <div className="space-y-10 order-2 lg:order-1">
                 <div className="space-y-4">
-                   <h2 className="text-4xl md:text-6xl font-bold text-slate-900 leading-[1.1] tracking-tight">
+                  <h2 className="text-4xl md:text-6xl font-bold text-slate-900 leading-[1.1] tracking-tight">
                     Meet <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-600">Riya</span>. <br />
                     She wants to buy.
                   </h2>
@@ -140,15 +136,15 @@ export default function LandingPage() {
                     But she primarily speaks Tamil.
                   </p>
                 </div>
-                
+
                 <div className="space-y-6 text-lg text-slate-500 leading-relaxed border-l-2 border-slate-200 pl-8">
                   <p>
-                    Riya found your store. She loved the product photos. 
-                    But the description was pure technical English: 
+                    Riya found your store. She loved the product photos.
+                    But the description was pure technical English:
                     <span className="block mt-2 italic text-slate-400">"Handcrafted oil painting, archival quality canvas."</span>
                   </p>
                   <p>
-                    She didn't understand <span className="text-red-500 font-semibold bg-red-50 px-1 rounded">"Archival"</span>. 
+                    She didn't understand <span className="text-red-500 font-semibold bg-red-50 px-1 rounded">"Archival"</span>.
                     She felt disconnected.
                   </p>
                 </div>
@@ -157,7 +153,7 @@ export default function LandingPage() {
                   <XCircle className="h-6 w-6 text-red-500 shrink-0 mt-1" />
                   <div>
                     <h4 className="font-bold text-red-900">The Result?</h4>
-                    <p className="text-red-700/80 mt-1">Confused and hesitant, she closed the tab. <br/>You just lost a sale to a local competitor.</p>
+                    <p className="text-red-700/80 mt-1">Confused and hesitant, she closed the tab. <br />You just lost a sale to a local competitor.</p>
                   </div>
                 </div>
               </div>
@@ -174,15 +170,15 @@ export default function LandingPage() {
                   <div className="pt-12 px-6 pb-6 space-y-6 bg-white h-full relative">
                     {/* Product Image Placeholder */}
                     <div className="w-full aspect-square bg-slate-100 rounded-2xl relative overflow-hidden">
-                       <div className="absolute inset-0 bg-gradient-to-tr from-slate-200 to-slate-50 flex items-center justify-center text-4xl">🎨</div>
+                      <div className="absolute inset-0 bg-gradient-to-tr from-slate-200 to-slate-50 flex items-center justify-center text-4xl">🎨</div>
                     </div>
 
                     {/* Product Title */}
                     <div className="space-y-2">
-                       <div className="h-6 w-3/4 bg-slate-100 rounded animate-pulse" />
-                       <div className="h-4 w-1/2 bg-slate-50 rounded animate-pulse" />
+                      <div className="h-6 w-3/4 bg-slate-100 rounded animate-pulse" />
+                      <div className="h-4 w-1/2 bg-slate-50 rounded animate-pulse" />
                     </div>
-                    
+
                     {/* The Barrier Alert */}
                     <div className="absolute inset-x-4 bottom-20 bg-white/80 backdrop-blur-md border border-red-100 p-4 rounded-xl shadow-lg transform translate-y-2 transition-transform duration-500">
                       <div className="flex items-center gap-3 mb-2">
@@ -198,7 +194,7 @@ export default function LandingPage() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Decorative Elements behind phone */}
                 <div className="absolute -inset-4 bg-gradient-to-tr from-orange-200 to-amber-100 rounded-[3rem] -z-10 blur-xl opacity-60 transform rotate-6 transition-transform group-hover:rotate-3"></div>
               </div>
@@ -210,7 +206,7 @@ export default function LandingPage() {
         {/* Section 3: The Solution - Bento Grid Style */}
         <section className="py-32 bg-white relative">
           <div className="container mx-auto px-6">
-            
+
             <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">
                 Don't let language kill your growth.
@@ -221,7 +217,7 @@ export default function LandingPage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              
+
               {/* Card 1 */}
               <div className="md:col-span-2 bg-[#F8FAFC] p-8 md:p-12 rounded-3xl border border-slate-100 hover:border-violet-100 hover:shadow-2xl hover:shadow-violet-100/50 transition-all duration-300 group overflow-hidden relative">
                 <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:opacity-20 transition-opacity">
@@ -275,9 +271,9 @@ export default function LandingPage() {
                   </p>
                 </div>
                 <div className="hidden md:flex flex-col gap-3">
-                   <div className="bg-white px-4 py-2 rounded-lg shadow-sm text-sm font-medium text-slate-600">🇮🇳 Hindi</div>
-                   <div className="bg-white px-4 py-2 rounded-lg shadow-sm text-sm font-medium text-slate-600 translate-x-4">tamil தமிழ்</div>
-                   <div className="bg-white px-4 py-2 rounded-lg shadow-sm text-sm font-medium text-slate-600">తెలుగు Telugu</div>
+                  <div className="bg-white px-4 py-2 rounded-lg shadow-sm text-sm font-medium text-slate-600">🇮🇳 Hindi</div>
+                  <div className="bg-white px-4 py-2 rounded-lg shadow-sm text-sm font-medium text-slate-600 translate-x-4">tamil தமிழ்</div>
+                  <div className="bg-white px-4 py-2 rounded-lg shadow-sm text-sm font-medium text-slate-600">తెలుగు Telugu</div>
                 </div>
               </div>
 
@@ -285,20 +281,22 @@ export default function LandingPage() {
           </div>
         </section>
 
+
+
         {/* Section 4: CTA - Neon Night Theme */}
         <section className="py-32 bg-[#030712] relative overflow-hidden text-center border-t border-white/10">
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-[#030712] via-[#0f172a] to-[#030712] opacity-90" />
-          
+
           {/* Glow effect behind CTA */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-indigo-600/20 rounded-full blur-[100px] -z-0 pointer-events-none" />
 
           <div className="relative z-10 container mx-auto px-6 space-y-10">
             <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tight">
-              Ready to speak to <br /> 
+              Ready to speak to <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-white">1.4 Billion People?</span>
             </h2>
-            
+
             <div className="flex flex-col items-center gap-6">
               <Link href="/studio">
                 <Button size="lg" className="h-16 px-12 text-xl rounded-full bg-white text-slate-950 hover:bg-slate-200 shadow-[0_0_60px_-15px_rgba(255,255,255,0.6)] transition-all hover:scale-105 font-bold cursor-pointer border-4 border-transparent hover:border-violet-200/50 bg-clip-padding">
@@ -339,7 +337,18 @@ export default function LandingPage() {
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
             <a href="#" className="hover:text-white transition-colors">Contact Support</a>
           </div>
-          <p>© 2024 LingoKart Inc.</p>
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            <p>© 2024 LingoKart Inc.</p>
+            <a
+              href="https://lingo.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all"
+            >
+              <span className="text-xs text-slate-400 group-hover:text-slate-300">Powered by</span>
+              <span className="text-xs font-bold text-white">lingo.dev</span>
+            </a>
+          </div>
         </div>
       </footer>
     </div>

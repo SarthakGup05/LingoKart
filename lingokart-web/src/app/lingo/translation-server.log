@@ -104,3 +104,14 @@
 2026-02-03T14:12:15.062Z [DEBUG] [Lingo.dev] WebSocket client disconnected. Total clients: 1
 2026-02-03T14:12:15.065Z [DEBUG] [Lingo.dev] WebSocket client disconnected. Total clients: 0
 2026-02-03T14:12:15.722Z [DEBUG] [Lingo.dev] WebSocket client connected. Total clients: 1
+2026-02-03T14:23:24.911Z [DEBUG] [Lingo.dev] WebSocket client disconnected. Total clients: 0
+2026-02-04T13:18:00.963Z [INFO] [Lingo.dev] Port 60000 is available, starting new server...
+2026-02-04T13:18:01.620Z [INFO] [Lingo.dev] 🔧 Initializing translator...
+2026-02-04T13:18:01.621Z [DEBUG] [Lingo.dev] Starting translation server on port 60000
+2026-02-04T13:18:01.622Z [INFO] [Lingo.dev] Translation server listening on http://127.0.0.1:60000
+2026-02-04T13:18:01.622Z [INFO] [Lingo.dev] WebSocket server initialized
+2026-02-04T13:18:16.554Z [DEBUG] [Lingo.dev] WebSocket client connected. Total clients: 1
+2026-02-04T13:25:11.394Z [DEBUG] [Lingo.dev] WebSocket client disconnected. Total clients: 0
+2026-02-04T13:25:12.022Z [DEBUG] [Lingo.dev] WebSocket client connected. Total clients: 1
+2026-02-04T13:31:38.057Z [DEBUG] [Lingo.dev] WebSocket client disconnected. Total clients: 0
+2026-02-04T13:31:38.826Z [DEBUG] [Lingo.dev] WebSocket client connected. Total clients: 1
