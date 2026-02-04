@@ -29,11 +29,23 @@ const LANGS: any = {
   bn: "Bengali",
 };
 
-export default function PreviewPanel({ data, loading, locale }: any) {
+type Props = {
+  data: any
+  loading: boolean
+  locale: string
+  onLocaleChange?: (locale: string) => void
+}
+
+export default function PreviewPanel({
+  data,
+  loading,
+  locale,
+  onLocaleChange,
+}: Props) {
   // CHANGED: track which section is copied (null = none, string = section id)
   const [copyState, setCopyState] = useState<string | null>(null);
 
-  const [activeTab, setActiveTab] = useState("en");
+  const [activeTab, setActiveTab] = useState(locale);
   const [loadingStep, setLoadingStep] = useState(0);
 
   const LOADING_STEPS = [
@@ -53,6 +65,10 @@ export default function PreviewPanel({ data, loading, locale }: any) {
       return () => clearInterval(interval);
     }
   }, [loading]);
+
+  useEffect(() => {
+    setActiveTab(locale);
+  }, [locale]);
 
   // CHANGED: Added sectionId parameter to identify which button was clicked
   const handleCopy = (text: string, sectionId: string) => {
@@ -137,7 +153,14 @@ export default function PreviewPanel({ data, loading, locale }: any) {
 
       {/* Header & Tabs */}
       <div className="border-b border-slate-100 bg-slate-50/50 p-4">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs
+          value={activeTab}
+          onValueChange={(value) => {
+            setActiveTab(value);
+            onLocaleChange?.(value);
+          }}
+          className="w-full"
+        >
           <TabsList className="w-full h-12 bg-slate-200/50 p-1 rounded-xl">
             {Object.keys(LANGS).map((lang) => (
               <TabsTrigger

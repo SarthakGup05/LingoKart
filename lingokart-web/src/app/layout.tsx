@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { LingoProvider } from "@lingo.dev/compiler/react";
+import { LingoProvider } from "@/components/LingoProvider";
 
 export const metadata = {
   title: "LingoKart",

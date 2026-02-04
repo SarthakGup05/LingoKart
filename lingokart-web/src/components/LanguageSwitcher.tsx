@@ -1,39 +1,29 @@
-"use client";
+"use client"
 
-import { useLingoContext } from "@lingo.dev/compiler/react";
-
-// 1️⃣ Define locales as a literal union
-const LOCALES = ["en", "hi", "ta", "bn"] as const;
-type AppLocale = (typeof LOCALES)[number];
-
-const OPTIONS: { value: AppLocale; label: string }[] = [
+const OPTIONS = [
   { value: "en", label: "English" },
   { value: "hi", label: "Hindi" },
   { value: "ta", label: "Tamil" },
   { value: "bn", label: "Bengali" },
-];
+]
 
-export function LanguageSwitcher() {
-  const { locale, setLocale } = useLingoContext();
+type Props = {
+  value: string
+  onChange: (value: string) => void
+}
 
-  // 2️⃣ Runtime-safe + type-safe guard
-  function handleChange(value: string) {
-    if (LOCALES.includes(value as AppLocale)) {
-      setLocale(value as AppLocale);
-    }
-  }
-
+export function LanguageSwitcher({ value, onChange }: Props) {
   return (
     <select
-      value={locale}
-      onChange={(e) => handleChange(e.target.value)}
-      className="rounded-md border px-2 py-1 text-sm"
+      className="cursor-pointer rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm"
+      value={value}
+      onChange={(event) => onChange(event.target.value)}
     >
-      {OPTIONS.map((opt) => (
-        <option key={opt.value} value={opt.value}>
-          {opt.label}
+      {OPTIONS.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
         </option>
       ))}
     </select>
-  );
+  )
 }

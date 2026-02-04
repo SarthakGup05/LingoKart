@@ -15,6 +15,8 @@ export default function StudioPage() {
   const [loading, setLoading] = useState(false);
   const [locale, setLocale] = useState("en");
 
+  const languageOrder = ["en", "hi", "ta", "bn"];
+
   const handleGenerate = async ({ product, tone, mode }: any) => {
     setLoading(true);
     try {
@@ -24,7 +26,7 @@ export default function StudioPage() {
         body: JSON.stringify({
           product,
           mode,
-          languages: ["en", "hi", "ta", "bn"],
+          languages: languageOrder,
         }),
       });
 
@@ -84,7 +86,7 @@ export default function StudioPage() {
               <span className="text-xs font-semibold text-slate-600 uppercase tracking-wide mr-2">
                 {t("nav.locale", locale)}
               </span>
-              <LanguageSwitcher />
+              <LanguageSwitcher value={locale} onChange={setLocale} />
             </div>
           </div>
         </div>
@@ -154,7 +156,12 @@ export default function StudioPage() {
               )}
               
               <div className="flex-1 relative z-10">
-                <PreviewPanel data={preview} loading={loading} locale={locale} />
+                <PreviewPanel
+                  data={preview}
+                  loading={loading}
+                  locale={locale}
+                  onLocaleChange={setLocale}
+                />
               </div>
             </div>
           </div>
