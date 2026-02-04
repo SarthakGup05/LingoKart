@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛍️ LingoKart  
+### AI-Enhanced, Multilingual Product Listings for Local Sellers
 
-## Getting Started
+LingoKart is an **AI-ready MVP** that helps sellers create **SEO-optimized, multilingual product listings** from a single input.
 
-First, run the development server:
+Instead of only translating text, LingoKart first **enhances product content using AI for SEO and buyer intent**, and then **localizes that enhanced content into regional languages** using Lingo.dev.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Problem
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Small and local sellers often struggle with:
+- Writing compelling product descriptions
+- Optimizing listings for search engines
+- Reaching non-English-speaking customers
+- Scaling content across regions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Most tools focus only on translation.  
+They **don’t improve discoverability or conversion**.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 💡 Solution
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**LingoKart solves this in two clear stages:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **AI Content Enhancement**
+   - Improves descriptions for SEO
+   - Adds buyer-intent language
+   - Generates structured, high-quality copy
 
-## Deploy on Vercel
+2. **Real-Time Localization**
+   - Converts enhanced content into multiple regional languages
+   - Preserves meaning, tone, and structure
+   - Works instantly for dynamic seller input
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🧠 How It Works
+
+
+This pipeline ensures sellers get **both discoverability and reach**.
+
+---
+
+## ✨ Key Features
+
+- 🧠 AI-enhanced product descriptions
+- 🔍 SEO-focused copy generation
+- 🌍 Real-time multilingual localization
+- ⚡ Instant preview & copy
+- 🎨 Premium UI with loading states
+- 🛡️ Graceful AI fallback (demo-safe)
+
+---
+
+## 🌍 Localization Strategy
+
+LingoKart uses **runtime localization** for dynamic content.
+
+- **Tool:** Lingo.dev JavaScript SDK
+- **Scope:** Seller-generated, AI-enhanced product listings
+- **Why:**  
+  - Content changes per user  
+  - Needs on-demand translation  
+  - Preserves structured objects  
+
+Static UI text remains simple and language-agnostic in this MVP.
+
+---
+
+## 🧠 AI Enhancement Strategy
+
+AI is used **before localization**, not instead of it.
+
+### What AI does:
+- Improves product descriptions for SEO
+- Adds buyer-intent keywords
+- Enhances clarity and structure
+
+### Reliability First
+Because free-tier AI APIs can be rate-limited:
+- AI enhancement is attempted first
+- If unavailable, a deterministic SEO fallback is used
+- Localization always succeeds
+
+This ensures **no broken demos** and **production-safe behavior**.
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend**
+- Next.js 16 (App Router)
+- React
+- Tailwind CSS
+- shadcn/ui
+
+**Backend**
+- Next.js API Routes
+
+**AI**
+- Google Gemini API (SEO enhancement)
+
+**Localization**
+- Lingo.dev JavaScript SDK (runtime)
+
+---
+
+## 🌐 Supported Languages
+
+- English (source)
+- Hindi
+- Tamil
+- Bengali
+
+(Architecture supports easy expansion.)
+
+---
+
+## 🧪 Demo Flow
+
+1. Seller enters product details
+2. AI enhances content for SEO
+3. Enhanced content is localized into multiple languages
+4. Seller previews and copies listings instantly
+
+---
+
+## 🔐 Environment Variables
+
+```env
+LINGODOTDEV_API_KEY=your_lingo_key
+GEMINI_API_KEY=your_gemini_key
