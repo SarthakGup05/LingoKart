@@ -6,7 +6,7 @@ import { ArrowRight, Play, Sparkles, Zap, Globe } from "lucide-react";
 
 export function HeroSection() {
     return (
-        <section className="relative min-h-screen pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex flex-col items-center">
+        <section className="relative min-h-screen pt-24 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex flex-col items-center">
 
             {/* Background: Spotlight & Grid */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-violet-600/20 rounded-[100%] blur-[100px] -z-20 opacity-50 pointer-events-none" />

@@ -17,11 +17,12 @@ import {
   Type,
   AlignLeft,
   MousePointer2,
-  Bot,
   Loader2,
   Eye,
   Search,
-  Globe2
+  Globe2,
+  Sparkles,
+  Lightbulb
 } from "lucide-react";
 
 const LANGS: any = {
@@ -31,7 +32,7 @@ const LANGS: any = {
   bn: "Bengali",
 };
 
-// Define the steps for each mode
+// Define the loading steps for each mode
 const LOADING_SCENARIOS: any = {
   basic: [
     "Analyzing product context...",
@@ -53,7 +54,7 @@ type Props = {
   data: any
   loading: boolean
   locale: string
-  mode?: "basic" | "seo" // Added mode prop
+  mode?: "basic" | "seo"
   onLocaleChange?: (locale: string) => void
 }
 
@@ -61,14 +62,13 @@ export default function PreviewPanel({
   data,
   loading,
   locale,
-  mode = "basic", // Default to basic
+  mode = "basic",
   onLocaleChange,
 }: Props) {
   const [copyState, setCopyState] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState(locale);
   const [loadingStep, setLoadingStep] = useState(0);
 
-  // Get the correct steps based on the mode
   const currentSteps = useMemo(() => LOADING_SCENARIOS[mode] || LOADING_SCENARIOS.basic, [mode]);
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export default function PreviewPanel({
       setLoadingStep(0);
       const interval = setInterval(() => {
         setLoadingStep((prev) => (prev + 1) % currentSteps.length);
-      }, 2000); // 2 seconds per step
+      }, 2000); 
       return () => clearInterval(interval);
     }
   }, [loading, currentSteps]);
@@ -115,10 +115,10 @@ export default function PreviewPanel({
   return (
     <div className="h-full flex flex-col border-slate-200 bg-white shadow-sm transition-all hover:shadow-md duration-300 relative overflow-hidden group rounded-3xl border">
       
-      {/* 1. Subtle Top Gradient Line */}
+      {/* Top Gradient Line */}
       <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
 
-      {/* 2. Header Section */}
+      {/* Header Section */}
       <div className="p-6 pb-0 z-10">
         <div className="flex items-center justify-between mb-6">
           <div className="space-y-1">
@@ -129,7 +129,6 @@ export default function PreviewPanel({
               <p className="text-sm text-slate-500">
                 {mode === "seo" ? "SEO Optimized Generation" : "Standard Localization"}
               </p>
-              {/* Optional: Small badge to show current mode */}
               <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${
                 mode === 'seo' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600'
               }`}>
@@ -168,14 +167,14 @@ export default function PreviewPanel({
         </div>
       </div>
 
-      {/* 3. Main Content Area */}
+      {/* Main Content Area */}
       <ScrollArea className="flex-1 px-6 py-4">
         
         {loading ? (
-           /* LOADING STATE */
+          /* LOADING STATE */
           <div className="space-y-8 animate-in fade-in duration-500 mt-2">
             
-            {/* Dynamic Loading Status Bar */}
+            {/* Status Bar */}
             <div className={`flex items-center gap-3 mb-6 p-3 rounded-lg border w-fit transition-colors duration-500 ${
               mode === 'seo' 
                 ? 'bg-emerald-50 border-emerald-100 text-emerald-700' 
@@ -187,7 +186,7 @@ export default function PreviewPanel({
               </span>
             </div>
 
-            {/* Skeletons... */}
+            {/* Skeletons */}
             <div className="space-y-3">
                <div className="flex justify-between items-center">
                   <Skeleton className="h-3 w-24 bg-slate-100" />
@@ -205,17 +204,12 @@ export default function PreviewPanel({
                   <Skeleton className="h-4 w-full" />
                   <Skeleton className="h-4 w-[95%]" />
                   <Skeleton className="h-4 w-[90%]" />
-                  <Skeleton className="h-4 w-[98%]" />
-                  <Skeleton className="h-4 w-[80%]" />
                </div>
             </div>
 
-            <div className="space-y-3 pt-2">
-               <div className="flex justify-between items-center">
-                  <Skeleton className="h-3 w-20 bg-slate-100" />
-                  <Skeleton className="h-6 w-6 rounded-md bg-slate-100" />
-               </div>
-               <Skeleton className="h-12 w-full rounded-xl shadow-sm" />
+            {/* Insight Skeleton */}
+            <div className="space-y-2 pt-2">
+               <Skeleton className="h-24 w-full rounded-xl bg-violet-50/50 border border-violet-100" />
             </div>
           </div>
         ) : !data ? (
@@ -278,6 +272,29 @@ export default function PreviewPanel({
                   </p>
                 </div>
               </div>
+
+              {/* NEW: Cultural Insight Section */}
+              {/* Only renders if 'insight' exists in data, safe for existing code */}
+              {data[activeTab].insight && (
+                <div className="mt-6 relative overflow-hidden rounded-xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 p-4 shadow-sm">
+                  <div className="flex gap-4">
+                    <div className="shrink-0 h-10 w-10 rounded-lg bg-white border border-violet-100 flex items-center justify-center text-violet-600 shadow-sm">
+                      <Sparkles className="h-5 w-5 fill-violet-100" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <h4 className="text-sm font-bold text-violet-950 flex items-center gap-2">
+                        Gemini Cultural Insight
+                        <span className="text-[10px] uppercase tracking-wider font-bold bg-violet-600 text-white px-1.5 py-0.5 rounded">
+                          AI Reasoning
+                        </span>
+                      </h4>
+                      <p className="text-sm text-slate-600 leading-relaxed">
+                        {data[activeTab].insight}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* CTA Section */}
               <div className="group space-y-2">
