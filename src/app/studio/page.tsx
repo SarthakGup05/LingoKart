@@ -127,12 +127,12 @@ export default function StudioPage() {
                </div>
             </div>
             
-            <div className="px-4 py-3 bg-violet-50 border border-violet-100 rounded-xl flex gap-3 items-start">
+            {/* <div className="px-4 py-3 bg-violet-50 border border-violet-100 rounded-xl flex gap-3 items-start">
               <Wand2 className="h-5 w-5 text-violet-600 mt-0.5 shrink-0" />
               <p className="text-sm text-violet-700 leading-snug">
                 <strong>Pro Tip:</strong> Uploading a high-quality image allows our AI to automatically detect materials and colors.
               </p>
-            </div>
+            </div> */}
           </div>
 
           {/* Right Panel: Preview */}
