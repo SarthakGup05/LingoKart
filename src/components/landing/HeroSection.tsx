@@ -42,7 +42,7 @@ export function HeroSection() {
                     90% of Indian shoppers only buy in their native language.
                     <br className="hidden md:block" />
                     LingoKart instantly translates your store into
-                    <span className="text-white font-semibold"> 12+ regional dialects </span>
+                    <span className="text-white font-semibold"> 03+ regional dialects </span>
                     with cultural context.
                 </p>
 
