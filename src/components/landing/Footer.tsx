@@ -18,7 +18,7 @@ export function Footer() {
                     <a href="#" className="hover:text-white transition-colors">Contact Support</a>
                 </div>
                 <div className="flex flex-col md:flex-row items-center gap-4">
-                    <p>© 2024 LingoKart Inc.</p>
+                    <p>© 2026 LingoKart Inc.</p>
                     <a
                         href="https://lingo.dev"
                         target="_blank"
